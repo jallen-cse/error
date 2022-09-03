@@ -4,140 +4,49 @@
 
 #include <string>
 #include <sstream>
-#include <stdexcept>
 #include <cstring>
-
-// class Error : public std::string
-// {
-//   public:
-//     static Error some(const char* c)
-//     {
-//         return Error(c);
-//     }
-
-//     static Error none()
-//     {
-//         return Error();
-//     }
-
-//     explicit inline operator bool()
-//     {
-//         return !empty();
-//     }
-
-//   protected:
-//     Error() : std::string()
-//     {
-//     }
-
-//     Error(Error&& from) : std::string(std::move(from))
-//     {
-//     }
-
-//     Error(const Error& other) : std::string(other)
-//     {
-//     }
-
-//     Error(const char* cstr) : std::string(cstr)
-//     {
-//     }
-// };
-
-// Error do_something()
-// {
-//     return Error::none();
-// }
-
 
 namespace jack
 {
 
+namespace detail 
+{
+
+template <typename last_t>
+inline void variadic_strcat(std::stringstream& stream,
+        const last_t last)
+{
+    stream << last;
+}
+
+template <typename current_t, typename next_t, typename... remainder_t>
+inline void variadic_strcat(std::stringstream& stream, 
+        const current_t current, const next_t next, 
+        const remainder_t... remainder)
+{
+    stream << current;
+    variadic_strcat(stream, next, remainder...);
+}
+
+template <typename... str_args>
+inline std::string make_str(const str_args... args)
+{
+    std::stringstream ss;
+    variadic_strcat(ss, args...);
+    return ss.str();
+}
+
+} // namespace detail
+
 /**
  * @brief A human-readable error description
  */
-class reason : protected std::string
+class reason : private std::string
 {
-    // friend class jack::error;
-  
   public:
-    static inline reason some(const char* message)
-    {
-        return reason(message);
-    }
-
-    static inline reason some(const std::string& message)
-    {
-        return reason(message);
-    }
-
-    static inline reason some(std::string&& message)
-    {
-        return reason(std::move(message));
-    }
-
-    static inline reason none()
-    {
-        return {};
-    }
-
-    // template <typename fn>
-    // reason& if_some(const fn& f)
-    // {
-    //     if (*this)
-    //         f(this);
-    //     return *this;
-    // }
-
-    // template <typename fn>
-    // reason& if_none(const fn& f)
-    // {
-    //     if (!*this)
-    //         f();
-    //     return *this;
-    // }
-
-    /**
-     * @brief Wrap this reason with additional context (prepend)
-     * 
-     */
-    inline void wrap()
-    {
-    }
-
-    /**
-     * @brief Extend this reason with additional information (append)
-     * 
-     */
-    inline void extend()
-    {
-    }
-
-    /**
-     * @brief This will evaluate to true even if reason::some
-     * was called with an empty string.  An empty string is not
-     * a reason!
-     * 
-     * @return true if reason not empty
-     */
-    explicit inline operator bool()
-    {
-        return !empty();
-    }
-
-
-
-    reason(reason&& from) : std::string(std::move(from))
-    {
-    }
-
-    reason(const reason& other) : std::string(other)
-    {
-    }
-
-  protected:
-    reason() : std::string()
-    {
-    }
+    reason() = delete;
+    reason(reason&&) = default;
+    reason(const reason&) = default;
 
     reason(const char* c_str) : std::string(c_str)
     {
@@ -150,196 +59,242 @@ class reason : protected std::string
     reason(std::string&& str) : std::string(std::move(str))
     {
     }
+
+    template <typename... str_args>
+    reason(str_args... str) : std::string(detail::make_str(str...))
+    {
+    }
+
+    reason& operator=(const reason& other) = default;
+    reason& operator=(reason&& from) = default;
+
+    // template <typename... str_args>
+    // reason& wrap(str_args... context)
+    // {
+    //     auto ctx = detail::make_str(context...);
+    //     reserve(ctx.size() + 2);
+    //     insert(0, ": ").insert(0, ctx);
+    //     return *this;
+    // }
+
+    /**
+     * @brief Wrap this reason with additional context (prepend)
+     * 
+     * @param context c string to copy from
+     */
+    // template <>
+    reason& wrap(const char* context)
+    {
+        reserve(std::string::traits_type::length(context) + 2);
+        insert(0, ": ").insert(0, context);
+        return *this;
+    }
+    
+    /**
+     * @brief Wrap this reason with additional context (prepend)
+     * 
+     * @param contect string to copy from
+     */
+    // template <>
+    reason& wrap(const std::string& context)
+    {
+        reserve(context.size() + 2);           // TODO benchmark preemptive reserves
+        insert(0, ": ").insert(0, context);
+        return *this;
+    }
+
+    /**
+     * @brief Wrap this reason with additional context (prepend)
+     * 
+     * @param context reason to copy from
+     */
+    // template <>
+    reason& wrap(const reason& context)
+    {
+        reserve(context.size() + 2);
+        insert(0, ": ").insert(0, context);
+        return *this;
+    }
+
+    /**
+     * @brief Extend this reason with additional information (append)
+     * 
+     * @param info c string to copy from
+     */
+    reason& extend(const char* info)
+    {
+        reserve(std::string::traits_type::length(info) + 2);
+        append(": ").append(info);
+        return *this;
+    }
+
+    /**
+     * @brief Extend this reason with additional information (append)
+     * 
+     * @param info string to copy from
+     */
+    reason& extend(const std::string& info)
+    {
+        reserve(info.size() + 2);            // TODO benchmark preemptive reserves
+        append(": ").append(info);
+        return *this;
+    }
+
+    /**
+     * @brief Extend this reason with additional information (append)
+     * 
+     * @param info reason to copy from
+     */
+    reason& extend(const reason& info)
+    {
+        reserve(info.size() + 2);
+        append(": ").append(info);
+        return *this;
+    }
+
+    /**
+     * @brief Return const pointer to null-terminated contents. This is a
+     * handle to internal data. Do not modify or dire things may happen
+     */
+    const char* cstr() const
+    {
+        return c_str();
+    }
 };
 
-// class nonzero_error_code : public std::runtime_error
-// {
-//     nonzero_error_code() : std::runtime_error("'code' argument must be non-zero")
-//     {
-//     }
-// };
-
-// template <typename CodeTp = short>
-// class Error
-// {
-//   public:
-
-//     // // template <int code>
-//     // static inline error some(int code, reason reason)
-//     // {
-//     //     return error(true, code, reason);
-//     // }
-
-//     // static inline error none() 
-//     // {
-//     //     return error(false, 0, "");
-//     // }
-
-
-//     /**
-//      * @brief Update this' own values according to
-//      * the given error (this is really a copy assign).
-//      * 
-//      * @param from error to copy from
-//      */
-//     void update(const error& from)
-//     {
-//     }
-
-//     /**
-//      * @brief Consume the given error object and update
-//      * this' own values (this is really a move assign).
-//      * 
-//      * @param from error to move from
-//      */
-//     void update(error&& from)
-//     {
-//         m_some = from.m_some;        
-//         m_code = from.m_code;
-//         m_        
-//     }
-
-//     explicit inline operator bool() const
-//     {
-//         return m_code != 0;
-//     }
-
-//   protected:
-//     error(bool some, int code, const reason& reason) :
-//             m_some(some), m_code(code), m_reason(reason)    
-//     {
-//     }
-
-//     error(bool some, int code, reason&& reason) :
-//             m_some(some), m_code(code), m_reason(std::move(reason))
-//     {
-//     }
-
-//     const bool m_some;
-//     const int m_code;
-//     reason m_reason;
-// };
-
-namespace detail {
-
-template <typename Arg>
-inline void variadic_strcat_(std::stringstream& stream,
-        const Arg arg)
+inline std::ostream& operator<<(std::ostream& os, const reason& reason)
 {
-    stream << arg;
+    return os << reason.cstr();
 }
 
-template <typename Current, typename Next, typename... Remainder>
-inline void variadic_strcat_(std::stringstream& stream, 
-        const Current current, const Next next, 
-        const Remainder... remainder)
-{
-    stream << current;
-    variadic_strcat_(stream, next, remainder...);
-}
-
-template <typename... Args>
-inline std::string make_str(const Args... args)
-{
-    std::stringstream ss;
-    variadic_strcat_(ss, args...);
-    return ss.str();
-}
-
-}
-
+/**
+ * @brief A human-readable error description with a
+ * paired code for programmatic error handling. 
+ */
 class error
 {
   public:
-
     error(error&& other) = default;
     error(const error& other) = default;
 
+    error(int code, const reason& reason) :
+            code(code), desc(reason)
+    {
+    }
+
+    error(int code, reason&& reason) :
+            code(code), desc(std::move(reason))
+    {
+    }
+
     error(int code, const char* reason) :
-        m_code(code), m_reason(reason)
+            code(code), desc(reason)
     {
     }
 
     error(int code, const std::string& reason) :
-            m_code(code), m_reason(reason)    
+            code(code), desc(reason)
     {
     }
 
-    error(int code, std::string&& reason) :
-            m_code(code), m_reason(std::move(reason))
+    error(int code, std::string&& reason) : 
+            code(code), desc(std::move(reason))
     {
     }
 
     template <typename... str_args>
-    error(int code, const str_args... args) :
-            m_code(code), m_reason(detail::make_str(args...))
+    error(int code, str_args... reason) :
+            code(code), desc(reason...)
     {
     }
+
+    error& operator=(error&&) = default;
+    error& operator=(const error&) = default;
+
+    // template <typename... str_args>
+    // error& wrap(str_args... context)
+    // {
+        // desc.wrap()
+    // }
 
     /**
-     * @brief Wrap this reason with additional context (prepend). 
+     * @brief Wrap this error's reason with additional context (prepend)
+     * 
+     * @param context c string to copy from
      */
-    void wrap(const std::string& context)
-    {   
-        m_reason.reserve(context.size() + 2);           // TODO benchmark preemptive reserves
-        m_reason.insert(0, ": ").insert(0, context);
+    error& wrap(const char* context)
+    {
+        desc.wrap(context);
+        return *this;
     }
-
+    
     /**
-     * @brief Extend this reason with additional information (append).
+     * @brief Wrap this error's reason with additional context (prepend)
+     * 
+     * @param contect string to copy from
      */
-    void extend(const std::string& detail)
+    error& wrap(const std::string& context)
     {
-        m_reason.reserve(detail.size() + 2);            // TODO benchmark preemptive reserves
-        m_reason.append(": ").append(detail);
-    }
-
-    error& operator=(const error& other)
-    {
-        if (this != &other)
-        {
-            m_code = other.m_code;
-            m_reason = other.m_reason;
-        }
+        desc.wrap(context);
         return *this;
     }
 
-    error& operator=(error&& other)
+    /**
+     * @brief Wrap this error's reason with additional context (prepend)
+     * 
+     * @param context reason to copy from
+     */
+    error& wrap(const reason& context)
     {
-        if (this != &other)
-        {
-            m_code = other.m_code;
-            m_reason = std::move(other.m_reason);
-        }
+        desc.wrap(context);
         return *this;
     }
 
-    int code() const
+    /**
+     * @brief Extend this error's reason with additional information (append)
+     * 
+     * @param info c string to copy from
+     */
+    error& extend(const char* info)
     {
-        return m_code;
+        desc.extend(info);
+        return *this;
     }
 
-    const std::string& reason() const &
+    /**
+     * @brief Extend this error's reason with additional information (append)
+     * 
+     * @param info string to copy from
+     */
+    error& extend(const std::string& info)
     {
-        return m_reason;
+        desc.extend(info);
+        return *this;
     }
 
-    std::string&& reason() &&
+    /**
+     * @brief Extend this error's reason with additional information (append)
+     * 
+     * @param info reason to copy from
+     */
+    error& extend(const reason& info)
     {
-        return std::move(m_reason);
+        desc.extend(info);
+        return *this;
     }
 
-  protected:
-    int m_code;
-    std::string m_reason;
+    /**
+     * @brief Produce a human-readable debug string of this error.
+     */
+    std::string debug_string() const
+    {
+        return detail::make_str("error { code: ", code,
+                ", desc: \"", desc, "\" }");
+    }
+
+    int code;
+    reason desc;
 };
-
-
-
-
-
-
-
 
 }
 
