@@ -95,34 +95,38 @@ class reason : private std::string
     reason& operator=(const reason& other) = default;
     reason& operator=(reason&& from) = default;
 
-    // template <typename... str_args>
-    // reason& wrap(str_args... context)
-    // {
-    //     auto ctx = detail::make_str(context...);
-    //     reserve(ctx.size() + 2);
-    //     insert(0, ": ").insert(0, ctx);
-    //     return *this;
-    // }
-
     /**
-     * @brief Wrap this reason with additional context (prepend)
+     * @brief Wrap this reason with additional context (prepend).
+     * 
+     * @param context values to contruct a string from
+     */
+    template <typename... str_args>
+    reason& wrap(str_args... context)
+    {
+        const auto ctx_str = detail::make_str(
+                std::forward<str_args>(context)...);
+        reserve(ctx_str.size() + 2);
+        insert(0, ": ").insert(0, ctx_str);
+        return *this;
+    }
+    
+    /**
+     * @brief Wrap this reason with additional context (prepend).
      * 
      * @param context c string to copy from
      */
-    // template <>
     reason& wrap(const char* context)
     {
         reserve(std::string::traits_type::length(context) + 2);
         insert(0, ": ").insert(0, context);
         return *this;
     }
-    
+
     /**
-     * @brief Wrap this reason with additional context (prepend)
+     * @brief Wrap this reason with additional context (prepend).
      * 
-     * @param contect string to copy from
+     * @param context std::string to copy from
      */
-    // template <>
     reason& wrap(const std::string& context)
     {
         reserve(context.size() + 2);           // TODO benchmark preemptive reserves
@@ -131,11 +135,10 @@ class reason : private std::string
     }
 
     /**
-     * @brief Wrap this reason with additional context (prepend)
+     * @brief Wrap this reason with additional context (prepend).
      * 
      * @param context reason to copy from
      */
-    // template <>
     reason& wrap(const reason& context)
     {
         reserve(context.size() + 2);
@@ -144,7 +147,22 @@ class reason : private std::string
     }
 
     /**
-     * @brief Extend this reason with additional information (append)
+     * @brief Extend this reason with additional information (append).
+     * 
+     * @param info values to construct a string from
+     */
+    template <typename... str_args>
+    reason& extend(str_args... info)
+    {
+        const auto info_str = detail::make_str(
+                std::forward<str_args>(info)...);
+        reserve(info_str.size() + 2);
+        append(": ").append(info_str);
+        return *this;
+    }
+
+    /**
+     * @brief Extend this reason with additional information (append).
      * 
      * @param info c string to copy from
      */
@@ -156,9 +174,9 @@ class reason : private std::string
     }
 
     /**
-     * @brief Extend this reason with additional information (append)
+     * @brief Extend this reason with additional information (append).
      * 
-     * @param info string to copy from
+     * @param info std::string to copy from
      */
     reason& extend(const std::string& info)
     {
@@ -168,13 +186,13 @@ class reason : private std::string
     }
 
     /**
-     * @brief Extend this reason with additional information (append)
+     * @brief Extend this reason with additional information (append).
      * 
      * @param info reason to copy from
      */
     reason& extend(const reason& info)
     {
-        reserve(info.size() + 2);
+        reserve(info.size() + 2);            // TODO benchmark preemptive reserves
         append(": ").append(info);
         return *this;
     }
