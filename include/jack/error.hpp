@@ -154,6 +154,7 @@ class reason : private std::string
     template <typename... str_args>
     reason& extend(str_args... info)
     {
+        puts("reason::extend variadic");
         const auto info_str = detail::make_str(
                 std::forward<str_args>(info)...);
         reserve(info_str.size() + 2);
@@ -256,75 +257,27 @@ class error
     error& operator=(error&&) = default;
     error& operator=(const error&) = default;
 
-    // template <typename... str_args>
-    // error& wrap(str_args... context)
-    // {
-        // desc.wrap()
-    // }
-
     /**
-     * @brief Wrap this error's reason with additional context (prepend)
+     * @brief Wrap this error's reason with additional context (prepend).
      * 
-     * @param context c string to copy from
+     * @param context values to construct a string from
      */
-    error& wrap(const char* context)
+    template <typename... str_args>
+    error& wrap(str_args&&... context)
     {
-        desc.wrap(context);
-        return *this;
-    }
-    
-    /**
-     * @brief Wrap this error's reason with additional context (prepend)
-     * 
-     * @param contect string to copy from
-     */
-    error& wrap(const std::string& context)
-    {
-        desc.wrap(context);
+        desc.wrap(std::forward<str_args>(context)...);
         return *this;
     }
 
     /**
-     * @brief Wrap this error's reason with additional context (prepend)
+     * @brief Extend this error's reason with additional information (append).
      * 
-     * @param context reason to copy from
+     * @param info values to construct a string from
      */
-    error& wrap(const reason& context)
+    template <typename... str_args>
+    error& extend(str_args&&... info)
     {
-        desc.wrap(context);
-        return *this;
-    }
-
-    /**
-     * @brief Extend this error's reason with additional information (append)
-     * 
-     * @param info c string to copy from
-     */
-    error& extend(const char* info)
-    {
-        desc.extend(info);
-        return *this;
-    }
-
-    /**
-     * @brief Extend this error's reason with additional information (append)
-     * 
-     * @param info string to copy from
-     */
-    error& extend(const std::string& info)
-    {
-        desc.extend(info);
-        return *this;
-    }
-
-    /**
-     * @brief Extend this error's reason with additional information (append)
-     * 
-     * @param info reason to copy from
-     */
-    error& extend(const reason& info)
-    {
-        desc.extend(info);
+        desc.extend(std::forward<str_args>(info)...);
         return *this;
     }
 
