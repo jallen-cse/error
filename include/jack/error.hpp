@@ -154,7 +154,6 @@ class reason : private std::string
     template <typename... str_args>
     reason& extend(str_args... info)
     {
-        puts("reason::extend variadic");
         const auto info_str = detail::make_str(
                 std::forward<str_args>(info)...);
         reserve(info_str.size() + 2);
