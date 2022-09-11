@@ -42,22 +42,18 @@ enum MyErrCode
 //     // return jack::error(10, "what_the_hell");
 //     return tl::make_unexpected(jack::error(101, "what the hell"));
 // }
-#include "fake_optional.hpp"
 
-optional<jack::error> might_fail()
-{
-    return jack::error(1, "reason");
-}
+// #include "fake_optional.hpp"
 
-optional<jack::reason> might_produce_reason()
-{
-    return jack::reason("what in the ", 101, "world");
-}
+// optional<jack::reason> might_produce_reason()
+// {
+//     return jack::reason("what in the ", 101, "world");
+// }
 
-optional<jack::error> might_produce_error()
-{
-    return jack::error(101, "ajsjjas", 1001);
-}
+// optional<jack::error> might_produce_error()
+// {
+//     return jack::error(101, "ajsjjas", 1001);
+// }
 
 int main()
 {
@@ -87,19 +83,46 @@ int main()
     // }
 
 
-    jack::reason reason("a fail reason");
+    jack::reason reason0("a fail reason");
+    jack::reason reason1("a fail reason");
 
-    // reason.wrap("failed to do something");
+    reason0.wrap("const char* ctx");
+    reason0.wrap(std::string("string ctx"));
+    reason0.wrap(jack::reason("reason ctx"));
+    reason0.wrap("ap0, ", std::string("ap1, "), jack::reason("ap2, "), 100);
 
-    std::cout << reason
-        .wrap("failed to do something")
-        .extend("number is bad") << '\n';
+    reason1.extend("const char* ctx");
+    reason1.extend(std::string("string ctx"));
+    reason1.extend(jack::reason("reason ctx"));
+    reason1.extend("ap0, ", std::string("ap1, "), jack::reason("ap2, "), 100);
+
+    std::cout << reason0 << '\n'
+              << reason1 << '\n';
+
+    jack::error error0(100, "a fail reason");
+    jack::error error1(100, "a fail reason");
+
+    error0.wrap("const char* ctx");
+    error0.wrap(std::string("string ctx"));
+    error0.wrap(jack::reason("reason ctx"));
+    error0.wrap("ap0, ", std::string("ap1, "), jack::reason("ap2, "), 100);
+
+    error1.extend("const char* ctx");
+    error1.extend(std::string("string ctx"));
+    error1.extend(jack::reason("reason ctx"));
+    error1.extend("ap0, ", std::string("ap1, "), jack::reason("ap2, "), 100);
+
+    std::cout << error0.debug_string() << '\n'
+              << error1.debug_string() << '\n';
 
 
-    std::cout << jack::error(101, "a fail reason").debug_string() << '\n';
+    // std::cout << reason
+    //     .wrap(jack::reason("failed to do something"))
+    //     .extend("number is bad") << '\n';
 
+    // std::cout << jack::error(101, "a fail reason").debug_string() << '\n';
 
-
+    
 
 
 
