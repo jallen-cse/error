@@ -4,7 +4,8 @@
 
 #include <string>
 #include <sstream>
-#include <cstring>
+#include <cstring>          // dangling?
+#include <type_traits>
 
 namespace jack
 {
@@ -12,29 +13,55 @@ namespace jack
 namespace detail 
 {
 
+// prevent collisions with other jack defs
+#ifndef JACK_DETAIL_VARIADIC_MAKE_STR
+#define JACK_DETAIL_VARIADIC_MAKE_STR
+
+template <typename t>
+using cref_or_val = typename std::conditional<
+        std::is_fundamental<t>::value, t, const t&>::type;
+
 template <typename last_t>
 inline void variadic_strcat(std::stringstream& stream,
-        const last_t last)
+        cref_or_val<last_t> last)
 {
     stream << last;
 }
 
-template <typename current_t, typename next_t, typename... remainder_t>
-inline void variadic_strcat(std::stringstream& stream, 
-        const current_t current, const next_t next, 
-        const remainder_t... remainder)
+template <typename current_t, typename... remainder_ts>
+inline void variadic_strcat(std::stringstream& stream,
+        cref_or_val<current_t> current, 
+        remainder_ts&&... remainder)
 {
     stream << current;
-    variadic_strcat(stream, next, remainder...);
+    variadic_strcat<remainder_ts...>(stream, 
+            std::forward<remainder_ts>(remainder)...);
 }
 
-template <typename... str_args>
-inline std::string make_str(const str_args... args)
+/**
+ * @brief Construct a string from an arbitrary series of parameters
+ * using a std::stringstream and operator<<.
+ * 
+ * @return std::string 
+ */
+template <typename... str_ts>
+inline std::string make_str(str_ts&&... args)
 {
     std::stringstream ss;
-    variadic_strcat(ss, args...);
+    variadic_strcat<str_ts...>(ss, 
+            std::forward<str_ts>(args)...);
     return ss.str();
 }
+
+/**
+ * @brief Eat empty make_str calls w/o the fluff.
+ */
+inline std::string make_str()
+{
+    return {};
+}
+
+#endif // #ifndef JACK_DETAIL_VARIADIC_MAKE_STR
 
 } // namespace detail
 
