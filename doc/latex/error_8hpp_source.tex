@@ -1,0 +1,235 @@
+\hypertarget{error_8hpp_source}{}\doxysection{error.\+hpp}
+\label{error_8hpp_source}\index{/home/jack/projects/error/include/jack/error.hpp@{/home/jack/projects/error/include/jack/error.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#ifndef INCLUDE\_JACK\_ERROR\_HPP}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#define INCLUDE\_JACK\_ERROR\_HPP}}
+\DoxyCodeLine{4 }
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <sstream>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <cstring>}          \textcolor{comment}{// dangling?}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <type\_traits>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{namespace }jack}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{namespace }detail }
+\DoxyCodeLine{14 \{}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{comment}{// prevent collisions with other jack defs}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#ifndef JACK\_DETAIL\_VARIADIC\_MAKE\_STR}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#define JACK\_DETAIL\_VARIADIC\_MAKE\_STR}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{keyword}{template} <\textcolor{keyword}{typename} t>}
+\DoxyCodeLine{21 \textcolor{keyword}{using }cref\_or\_val = \textcolor{keyword}{typename} std::conditional<}
+\DoxyCodeLine{22         std::is\_fundamental<t>::value, t, \textcolor{keyword}{const} t\&>::type;}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 \textcolor{keyword}{template} <\textcolor{keyword}{typename} last\_t>}
+\DoxyCodeLine{25 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} variadic\_strcat(std::stringstream\& stream,}
+\DoxyCodeLine{26         cref\_or\_val<last\_t> last)}
+\DoxyCodeLine{27 \{}
+\DoxyCodeLine{28     stream << last;}
+\DoxyCodeLine{29 \}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{template} <\textcolor{keyword}{typename} current\_t, \textcolor{keyword}{typename}... remainder\_ts>}
+\DoxyCodeLine{32 \textcolor{keyword}{inline} \textcolor{keywordtype}{void} variadic\_strcat(std::stringstream\& stream,}
+\DoxyCodeLine{33         cref\_or\_val<current\_t> current, }
+\DoxyCodeLine{34         remainder\_ts\&\&... remainder)}
+\DoxyCodeLine{35 \{}
+\DoxyCodeLine{36     stream << current;}
+\DoxyCodeLine{37     variadic\_strcat<remainder\_ts...>(stream, }
+\DoxyCodeLine{38             std::forward<remainder\_ts>(remainder)...);}
+\DoxyCodeLine{39 \}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{47 \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_ts>}
+\DoxyCodeLine{48 \textcolor{keyword}{inline} std::string make\_str(str\_ts\&\&... args)}
+\DoxyCodeLine{49 \{}
+\DoxyCodeLine{50     std::stringstream ss;}
+\DoxyCodeLine{51     variadic\_strcat<str\_ts...>(ss, }
+\DoxyCodeLine{52             std::forward<str\_ts>(args)...);}
+\DoxyCodeLine{53     \textcolor{keywordflow}{return} ss.str();}
+\DoxyCodeLine{54 \}}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{59 \textcolor{keyword}{inline} std::string make\_str()}
+\DoxyCodeLine{60 \{}
+\DoxyCodeLine{61     \textcolor{keywordflow}{return} \{\};}
+\DoxyCodeLine{62 \}}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \#ifndef JACK\_DETAIL\_VARIADIC\_MAKE\_STR}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 \} \textcolor{comment}{// namespace detail}}
+\DoxyCodeLine{67 }
+\DoxyCodeLine{71 \textcolor{keyword}{class }\mbox{\hyperlink{classjack_1_1reason}{reason}} : \textcolor{keyword}{private} std::string}
+\DoxyCodeLine{72 \{}
+\DoxyCodeLine{73   \textcolor{keyword}{public}:}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75     \textcolor{comment}{// Expose std::string member functions }}
+\DoxyCodeLine{76     \textcolor{keyword}{using }std::string::c\_str;}
+\DoxyCodeLine{77 }
+\DoxyCodeLine{79     \mbox{\hyperlink{classjack_1_1reason_ac7e8ab469180ccb4ba233ca6b87db693}{reason}}() = \textcolor{keyword}{delete};}
+\DoxyCodeLine{80 }
+\DoxyCodeLine{87     \mbox{\hyperlink{classjack_1_1reason_ad0af61ad711ea022eb07ad3f62128e2b}{reason}}(\mbox{\hyperlink{classjack_1_1reason}{reason}}\&\& \mbox{\hyperlink{classjack_1_1reason}{reason}}) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{88 }
+\DoxyCodeLine{95     \mbox{\hyperlink{classjack_1_1reason_a4c9a7d986b1421044a181ef090d16bce}{reason}}(\textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason}{reason}}) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{103     \mbox{\hyperlink{classjack_1_1reason_a3492918dda1f6373c747b5cba0b2767c}{reason}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* c\_str) : std::string(c\_str)}
+\DoxyCodeLine{104     \{}
+\DoxyCodeLine{105     \}}
+\DoxyCodeLine{106 }
+\DoxyCodeLine{113     \mbox{\hyperlink{classjack_1_1reason_a3691fd6dd4e289bdf31afbc0a5218adb}{reason}}(\textcolor{keyword}{const} std::string\& str) : std::string(str)}
+\DoxyCodeLine{114     \{}
+\DoxyCodeLine{115     \}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{123     \mbox{\hyperlink{classjack_1_1reason_afb289f76d6deb8e1b40fe5053623f11f}{reason}}(std::string\&\& str) : std::string(std::move(str))}
+\DoxyCodeLine{124     \{}
+\DoxyCodeLine{125     \}}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{134     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
+\DoxyCodeLine{135     \mbox{\hyperlink{classjack_1_1reason_aa76c8b68463e9b6c90ac69d7dbda3633}{reason}}(str\_args... str) : std::string(detail::make\_str(}
+\DoxyCodeLine{136             std::forward<str\_args>(str)...))}
+\DoxyCodeLine{137     \{}
+\DoxyCodeLine{138     \}}
+\DoxyCodeLine{139 }
+\DoxyCodeLine{146     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_aaedaac528937f963348cecfe3abe780f}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1reason}{reason}}\& other) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{147     }
+\DoxyCodeLine{154     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a9a51569485ac8154ebefc1256a6d3141}{operator=}}(\mbox{\hyperlink{classjack_1_1reason}{reason}}\&\& from) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{161     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
+\DoxyCodeLine{162     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}{wrap}}(str\_args... context)}
+\DoxyCodeLine{163     \{}
+\DoxyCodeLine{164         \textcolor{keyword}{const} \textcolor{keyword}{auto} ctx\_str = detail::make\_str(}
+\DoxyCodeLine{165                 std::forward<str\_args>(context)...);}
+\DoxyCodeLine{166         reserve(ctx\_str.size() + 2);}
+\DoxyCodeLine{167         insert(0, \textcolor{stringliteral}{"{}: "{}}).insert(0, ctx\_str);}
+\DoxyCodeLine{168         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{169     \}}
+\DoxyCodeLine{170     }
+\DoxyCodeLine{176     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a56ed56f387dd2f276e0def25f3959fc2}{wrap}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* context)}
+\DoxyCodeLine{177     \{}
+\DoxyCodeLine{178         reserve(std::string::traits\_type::length(context) + 2);}
+\DoxyCodeLine{179         insert(0, \textcolor{stringliteral}{"{}: "{}}).insert(0, context);}
+\DoxyCodeLine{180         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{181     \}}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{188     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_ac34494e2cda122e0557eeb3d8e544dac}{wrap}}(\textcolor{keyword}{const} std::string\& context)}
+\DoxyCodeLine{189     \{}
+\DoxyCodeLine{190         reserve(context.size() + 2);           \textcolor{comment}{// TODO benchmark preemptive reserves}}
+\DoxyCodeLine{191         insert(0, \textcolor{stringliteral}{"{}: "{}}).insert(0, context);}
+\DoxyCodeLine{192         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{193     \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{200     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_aaee7f81796651d31e0f06e7081136de9}{wrap}}(\textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1reason}{reason}}\& context)}
+\DoxyCodeLine{201     \{}
+\DoxyCodeLine{202         reserve(context.size() + 2);}
+\DoxyCodeLine{203         insert(0, \textcolor{stringliteral}{"{}: "{}}).insert(0, context);}
+\DoxyCodeLine{204         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{205     \}}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{212     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
+\DoxyCodeLine{213     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}{extend}}(str\_args... info)}
+\DoxyCodeLine{214     \{}
+\DoxyCodeLine{215         \textcolor{keyword}{const} \textcolor{keyword}{auto} info\_str = detail::make\_str(}
+\DoxyCodeLine{216                 std::forward<str\_args>(info)...);}
+\DoxyCodeLine{217         reserve(info\_str.size() + 2);}
+\DoxyCodeLine{218         append(\textcolor{stringliteral}{"{}: "{}}).append(info\_str);}
+\DoxyCodeLine{219         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{220     \}}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{227     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_ae99562ad40dd496d1208f97c04d15668}{extend}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* info)}
+\DoxyCodeLine{228     \{}
+\DoxyCodeLine{229         reserve(std::string::traits\_type::length(info) + 2);}
+\DoxyCodeLine{230         append(\textcolor{stringliteral}{"{}: "{}}).append(info);}
+\DoxyCodeLine{231         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{232     \}}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{239     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_ac2590de21e0d8f9270772ae9b380fbd3}{extend}}(\textcolor{keyword}{const} std::string\& info)}
+\DoxyCodeLine{240     \{}
+\DoxyCodeLine{241         reserve(info.size() + 2);            \textcolor{comment}{// TODO benchmark preemptive reserves}}
+\DoxyCodeLine{242         append(\textcolor{stringliteral}{"{}: "{}}).append(info);}
+\DoxyCodeLine{243         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{244     \}}
+\DoxyCodeLine{245 }
+\DoxyCodeLine{251     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a5e2ca3d015ded120ae37a3a8d8dfb20c}{extend}}(\textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1reason}{reason}}\& info)}
+\DoxyCodeLine{252     \{}
+\DoxyCodeLine{253         reserve(info.size() + 2);            \textcolor{comment}{// TODO benchmark preemptive reserves}}
+\DoxyCodeLine{254         append(\textcolor{stringliteral}{"{}: "{}}).append(info);}
+\DoxyCodeLine{255         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{256     \}}
+\DoxyCodeLine{257 \};}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{260 \textcolor{keyword}{inline} std::ostream\& operator<<(std::ostream\& os, \textcolor{keyword}{const} reason\& reason)}
+\DoxyCodeLine{261 \{}
+\DoxyCodeLine{262     \textcolor{keywordflow}{return} os << reason.c\_str();}
+\DoxyCodeLine{263 \}}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{269 \textcolor{keyword}{class }\mbox{\hyperlink{classjack_1_1error}{error}}}
+\DoxyCodeLine{270 \{}
+\DoxyCodeLine{271   \textcolor{keyword}{public}:}
+\DoxyCodeLine{272     \mbox{\hyperlink{classjack_1_1error}{error}}(\mbox{\hyperlink{classjack_1_1error}{error}}\&\& other) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{273     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1error}{error}}\& other) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keywordtype}{int} code, \textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
+\DoxyCodeLine{276             code(code), desc(\mbox{\hyperlink{classjack_1_1reason}{reason}})}
+\DoxyCodeLine{277     \{}
+\DoxyCodeLine{278     \}}
+\DoxyCodeLine{279 }
+\DoxyCodeLine{280     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keywordtype}{int} code, \mbox{\hyperlink{classjack_1_1reason}{reason}}\&\& \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
+\DoxyCodeLine{281             code(code), desc(std::move(\mbox{\hyperlink{classjack_1_1reason}{reason}}))}
+\DoxyCodeLine{282     \{}
+\DoxyCodeLine{283     \}}
+\DoxyCodeLine{284 }
+\DoxyCodeLine{285     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keywordtype}{int} code, \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
+\DoxyCodeLine{286             code(code), desc(\mbox{\hyperlink{classjack_1_1reason}{reason}})}
+\DoxyCodeLine{287     \{}
+\DoxyCodeLine{288     \}}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keywordtype}{int} code, \textcolor{keyword}{const} std::string\& \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
+\DoxyCodeLine{291             code(code), desc(\mbox{\hyperlink{classjack_1_1reason}{reason}})}
+\DoxyCodeLine{292     \{}
+\DoxyCodeLine{293     \}}
+\DoxyCodeLine{294 }
+\DoxyCodeLine{295     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keywordtype}{int} code, std::string\&\& \mbox{\hyperlink{classjack_1_1reason}{reason}}) : }
+\DoxyCodeLine{296             code(code), desc(std::move(\mbox{\hyperlink{classjack_1_1reason}{reason}}))}
+\DoxyCodeLine{297     \{}
+\DoxyCodeLine{298     \}}
+\DoxyCodeLine{299 }
+\DoxyCodeLine{300     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
+\DoxyCodeLine{301     \mbox{\hyperlink{classjack_1_1error}{error}}(\textcolor{keywordtype}{int} code, str\_args... \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
+\DoxyCodeLine{302             code(code), desc(\mbox{\hyperlink{classjack_1_1reason}{reason}}...)}
+\DoxyCodeLine{303     \{}
+\DoxyCodeLine{304     \}}
+\DoxyCodeLine{305 }
+\DoxyCodeLine{306     \mbox{\hyperlink{classjack_1_1error}{error}}\& operator=(\mbox{\hyperlink{classjack_1_1error}{error}}\&\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{307     \mbox{\hyperlink{classjack_1_1error}{error}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classjack_1_1error}{error}}\&) = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{308 }
+\DoxyCodeLine{314     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
+\DoxyCodeLine{315     \mbox{\hyperlink{classjack_1_1error}{error}}\& \mbox{\hyperlink{classjack_1_1error_a350fc07d85f096fd76a2a45c52683cae}{wrap}}(str\_args\&\&... context)}
+\DoxyCodeLine{316     \{}
+\DoxyCodeLine{317         desc.\mbox{\hyperlink{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}{wrap}}(std::forward<str\_args>(context)...);}
+\DoxyCodeLine{318         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{319     \}}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{326     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
+\DoxyCodeLine{327     \mbox{\hyperlink{classjack_1_1error}{error}}\& \mbox{\hyperlink{classjack_1_1error_a389e773854ebd1892292864552e085c4}{extend}}(str\_args\&\&... info)}
+\DoxyCodeLine{328     \{}
+\DoxyCodeLine{329         desc.\mbox{\hyperlink{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}{extend}}(std::forward<str\_args>(info)...);}
+\DoxyCodeLine{330         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{331     \}}
+\DoxyCodeLine{332 }
+\DoxyCodeLine{336     std::string \mbox{\hyperlink{classjack_1_1error_ad0824f602ba7951ad19daa9b4c823e6c}{debug\_string}}()\textcolor{keyword}{ const}}
+\DoxyCodeLine{337 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{338         \textcolor{keywordflow}{return} detail::make\_str(\textcolor{stringliteral}{"{}error \{ code: "{}}, code,}
+\DoxyCodeLine{339                 \textcolor{stringliteral}{"{}, desc: \(\backslash\)"{}"{}}, desc, \textcolor{stringliteral}{"{}\(\backslash\)"{} \}"{}});}
+\DoxyCodeLine{340     \}}
+\DoxyCodeLine{341 }
+\DoxyCodeLine{343     \textcolor{keywordtype}{int} code;}
+\DoxyCodeLine{344 }
+\DoxyCodeLine{346     \mbox{\hyperlink{classjack_1_1reason}{reason}} desc;}
+\DoxyCodeLine{347 \};}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{349 \} \textcolor{comment}{// namespace jack}}
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// \#ifndef}}
+
+\end{DoxyCode}
