@@ -66,33 +66,90 @@ inline std::string make_str()
 } // namespace detail
 
 /**
- * @brief A human-readable error description
+ * @brief A human-readable error description.
  */
 class reason : private std::string
 {
   public:
-    reason() = delete;
-    reason(reason&&) = default;
-    reason(const reason&) = default;
 
+    // Expose std::string member functions 
+    using std::string::c_str;
+
+    /// @brief prevent default reason construction (does a default reason make any sense?)
+    reason() = delete;
+
+    /**
+     * @brief Construct a new reason object by moving from
+     * another reason object.
+     * 
+     * @param reason reason to move from
+     */
+    reason(reason&& reason) = default;
+
+    /**
+     * @brief Construct a new reason object by copying from
+     * another reason object.
+     * 
+     * @param reason reason to copy from
+     */
+    reason(const reason& reason) = default;
+
+    /**
+     * @brief Construct a new reason object by copying from
+     * a c string.
+     * 
+     * @param c_str c string to copy from
+     */
     reason(const char* c_str) : std::string(c_str)
     {
     }
 
+    /**
+     * @brief Construct a new reason object by copying from
+     * a std::string.
+     * 
+     * @param str std::string to copy from
+     */
     reason(const std::string& str) : std::string(str)
     {
     }
 
+    /**
+     * @brief Construct a new reason object by moving from
+     * a std::string.
+     * 
+     * @param str std::string to move from
+     */
     reason(std::string&& str) : std::string(std::move(str))
     {
     }
 
+    /**
+     * @brief Construct a new reason object from an arbitrary series
+     * of parameters using a std::stringstream and operator<<.
+     * 
+     * @tparam str_args types of arguments used to construct the reason
+     * @param str values to construct a reason from
+     */
     template <typename... str_args>
     reason(str_args... str) : std::string(detail::make_str(str...))
     {
     }
 
+    /**
+     * @brief Copy assignment operator.
+     * 
+     * @param other reason to copy from
+     * @return reason& to this reason
+     */
     reason& operator=(const reason& other) = default;
+    
+    /**
+     * @brief Move assignment operator.
+     * 
+     * @param from reason to move from
+     * @return reason& to this reason
+     */
     reason& operator=(reason&& from) = default;
 
     /**
@@ -196,20 +253,12 @@ class reason : private std::string
         append(": ").append(info);
         return *this;
     }
-
-    /**
-     * @brief Return const pointer to null-terminated contents. This is a
-     * handle to internal data. Do not modify or dire things may happen
-     */
-    const char* cstr() const
-    {
-        return c_str();
-    }
 };
 
+/// @brief Implement stream operator for reason class
 inline std::ostream& operator<<(std::ostream& os, const reason& reason)
 {
-    return os << reason.cstr();
+    return os << reason.c_str();
 }
 
 /**
@@ -289,10 +338,13 @@ class error
                 ", desc: \"", desc, "\" }");
     }
 
+    /// @brief 
     int code;
+
+    /// @brief 
     reason desc;
 };
 
-}
+} // namespace jack
 
 #endif // #ifndef
