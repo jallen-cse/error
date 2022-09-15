@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['extend_0',['extend',['../classjack_1_1reason.html#a57ba62166ca453bd02f80efa38d62c44',1,'jack::reason::extend(str_args... info)'],['../classjack_1_1reason.html#ae99562ad40dd496d1208f97c04d15668',1,'jack::reason::extend(const char *info)'],['../classjack_1_1reason.html#ac2590de21e0d8f9270772ae9b380fbd3',1,'jack::reason::extend(const std::string &amp;info)'],['../classjack_1_1reason.html#a5e2ca3d015ded120ae37a3a8d8dfb20c',1,'jack::reason::extend(const reason &amp;info)'],['../classjack_1_1error.html#a389e773854ebd1892292864552e085c4',1,'jack::error::extend()']]]
+  ['operator_3d_0',['operator=',['../classjack_1_1reason.html#aaedaac528937f963348cecfe3abe780f',1,'jack::reason::operator=(const reason &amp;other)=default'],['../classjack_1_1reason.html#a9a51569485ac8154ebefc1256a6d3141',1,'jack::reason::operator=(reason &amp;&amp;from)=default'],['../classjack_1_1error.html#a94c9879e84d9856cbc26976a6a049015',1,'jack::error::operator=(const error &amp;other)=default'],['../classjack_1_1error.html#ab4346ac0b16885e52f875a25c5746fb5',1,'jack::error::operator=(error &amp;&amp;from)=default']]]
 ];

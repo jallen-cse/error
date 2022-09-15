@@ -20,7 +20,7 @@ Inheritance diagram for jack\+::reason\+:\begin{figure}[H]
 \item 
 \mbox{\Hypertarget{classjack_1_1reason_ac7e8ab469180ccb4ba233ca6b87db693}\label{classjack_1_1reason_ac7e8ab469180ccb4ba233ca6b87db693}} 
 {\bfseries reason} ()=delete
-\begin{DoxyCompactList}\small\item\em prevent default reason construction (does a default reason make any sense?) \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Prevent default reason construction. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason_ad0af61ad711ea022eb07ad3f62128e2b}{reason}} (\mbox{\hyperlink{classjack_1_1reason}{reason}} \&\&\mbox{\hyperlink{classjack_1_1reason}{reason}})=default
 \begin{DoxyCompactList}\small\item\em Construct a new reason object by moving from another reason object. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason_a4c9a7d986b1421044a181ef090d16bce}{reason}} (const \mbox{\hyperlink{classjack_1_1reason}{reason}} \&\mbox{\hyperlink{classjack_1_1reason}{reason}})=default
@@ -173,6 +173,9 @@ Extend this reason with additional information (append).
 {\em info} & c string to copy from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_a5e2ca3d015ded120ae37a3a8d8dfb20c}\label{classjack_1_1reason_a5e2ca3d015ded120ae37a3a8d8dfb20c}} 
 \index{jack::reason@{jack::reason}!extend@{extend}}
 \index{extend@{extend}!jack::reason@{jack::reason}}
@@ -188,6 +191,9 @@ Extend this reason with additional information (append).
 {\em info} & reason to copy from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_ac2590de21e0d8f9270772ae9b380fbd3}\label{classjack_1_1reason_ac2590de21e0d8f9270772ae9b380fbd3}} 
 \index{jack::reason@{jack::reason}!extend@{extend}}
 \index{extend@{extend}!jack::reason@{jack::reason}}
@@ -203,6 +209,9 @@ Extend this reason with additional information (append).
 {\em info} & std\+::string to copy from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}\label{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}} 
 \index{jack::reason@{jack::reason}!extend@{extend}}
 \index{extend@{extend}!jack::reason@{jack::reason}}
@@ -219,6 +228,9 @@ Extend this reason with additional information (append).
 {\em info} & values to construct a string from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_aaedaac528937f963348cecfe3abe780f}\label{classjack_1_1reason_aaedaac528937f963348cecfe3abe780f}} 
 \index{jack::reason@{jack::reason}!operator=@{operator=}}
 \index{operator=@{operator=}!jack::reason@{jack::reason}}
@@ -235,7 +247,7 @@ Copy assignment operator.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-reason\& to this reason 
+reference to this reason 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_a9a51569485ac8154ebefc1256a6d3141}\label{classjack_1_1reason_a9a51569485ac8154ebefc1256a6d3141}} 
 \index{jack::reason@{jack::reason}!operator=@{operator=}}
@@ -253,7 +265,7 @@ Move assignment operator.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-reason\& to this reason 
+reference to this reason 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_a56ed56f387dd2f276e0def25f3959fc2}\label{classjack_1_1reason_a56ed56f387dd2f276e0def25f3959fc2}} 
 \index{jack::reason@{jack::reason}!wrap@{wrap}}
@@ -270,6 +282,9 @@ Wrap this reason with additional context (prepend).
 {\em context} & c string to copy from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_aaee7f81796651d31e0f06e7081136de9}\label{classjack_1_1reason_aaee7f81796651d31e0f06e7081136de9}} 
 \index{jack::reason@{jack::reason}!wrap@{wrap}}
 \index{wrap@{wrap}!jack::reason@{jack::reason}}
@@ -285,6 +300,9 @@ Wrap this reason with additional context (prepend).
 {\em context} & reason to copy from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_ac34494e2cda122e0557eeb3d8e544dac}\label{classjack_1_1reason_ac34494e2cda122e0557eeb3d8e544dac}} 
 \index{jack::reason@{jack::reason}!wrap@{wrap}}
 \index{wrap@{wrap}!jack::reason@{jack::reason}}
@@ -300,6 +318,9 @@ Wrap this reason with additional context (prepend).
 {\em context} & std\+::string to copy from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}\label{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}} 
 \index{jack::reason@{jack::reason}!wrap@{wrap}}
 \index{wrap@{wrap}!jack::reason@{jack::reason}}
@@ -316,6 +337,9 @@ Wrap this reason with additional context (prepend).
 {\em context} & values to contruct a string from \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+reference to this reason 
+\end{DoxyReturn}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
