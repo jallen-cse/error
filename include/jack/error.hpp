@@ -431,14 +431,29 @@ class error
     reason desc;
 };
 
-/**
- * @brief A human-readable error description with a
- * paired code for programmatic error handling. 
- * 
- * @tparam default integer to represent default state
- */
-// template <int default>
-// class derror;
+// /**
+//  * @brief A human-readable error description with a
+//  * paired code for programmatic error handling.  While I
+//  * recommend using the error classes with std::optional (C++17) & 
+//  * std::expected (C++23) or non-std implementations like those of
+//  * Sy Brand (https://github.com/TartanLlama; C++11/14/17), this template
+//  * allows definition of a default state that will evaluate to false
+//  * in an explicit boolean conversion.  
+//  * 
+//  * @tparam dfault integer to represent the default (non-error) state
+//  */
+// template <int dfault = 0>
+// class derror : public error
+// {
+//     derror() : error(dfault, {})
+//     {
+//     }
+
+//     explicit operator bool() const
+//     {
+//         return code != dfault;
+//     }
+// };
 
 namespace debug
 {
