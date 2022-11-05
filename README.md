@@ -15,3 +15,4 @@ TODO
 - cmake
 - split header
 - version / tag / release
+- license
