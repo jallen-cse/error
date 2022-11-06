@@ -1,5 +1,8 @@
-# Error
+# Error 
+
 Basic types for representing erroneous circumstances in modern C++.
+
+[![CircleCI](https://circleci.com/gh/jallen-cse/error.svg?style=shield)](https://circleci.com/gh/jallen-cse/error)
 
 This repository was born of headaches when percolating errors up the call stack. This library is specifically useful when there is some 
 human on the calling end that needs a readable message about what in the world happened.  
