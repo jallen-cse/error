@@ -1,0 +1,48 @@
+version: 2.1
+
+# Define the jobs we want to run for this project
+jobs:
+  build:
+    resource_class: small
+    docker:
+      - image: cimg/base:2022.11
+    steps:
+      - checkout
+      - run:
+          command: mkdir build
+          name: make a build dir
+      - run: 
+          command: |
+            cmake .. -DJACK_ERROR_BUILD_TESTS=off -DJACK_ERROR_BUILD_EXAMPLE=on &&
+            cmake --build .
+          name: build example
+          working_directory: ./build
+  
+  test:
+    resource_class: small
+    docker:
+      - image: cimg/base:2022.11
+    steps:
+      - checkout
+      - run:
+          command: mkdir build
+          name: make a build dir
+      - run: 
+          command: | 
+            cmake .. -DJACK_ERROR_BUILD_TESTS=on -DJACK_ERROR_BUILD_EXAMPLE=off &&
+            cmake --build . -j$(nproc)
+          name: build test executables
+          working_directory: ./build
+      - run:
+          command: |
+            ./jack_test_reason && 
+            ./jack_test_error
+          name: run tests
+          working_directory: ./build/test
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test
