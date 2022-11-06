@@ -12,10 +12,8 @@ those of [Sy Brand](https://github.com/TartanLlama) or within the [Boost](https:
 produces an error is quite a strange pattern!
 
 TODO
-- test
-- ci
+- ci other OS / arch / compilers
 - more readme
-- cmake
 - split header
 - version / tag / release
 - license
