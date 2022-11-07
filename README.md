@@ -73,3 +73,4 @@ I consider this project to be unfinished. Testing, features, and efficiencies ca
 - format string overloads of reason::reason, ::wrap, and ::extend
 - non-header-only build
 - defaultable error (to avoid some wrapper overhead like w/ optional) 
+- clang format
