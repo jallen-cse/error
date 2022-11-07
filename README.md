@@ -2,8 +2,9 @@
 
 Basic types for representing erroneous circumstances in modern C++.
 
-[![CircleCI](https://circleci.com/gh/jallen-cse/error.svg?style=shield)](https://circleci.com/gh/jallen-cse/error)
+[![Version](https://img.shields.io/github/v/release/jallen-cse/error?sort=semver)](https://github.com/jallen-cse/error/releases/latest)
 [![License: MIT](https://img.shields.io/github/license/jallen-cse/error?color=blue&style=shield)](./LICENSE)
+[![CircleCI](https://circleci.com/gh/jallen-cse/error.svg?style=shield)](https://circleci.com/gh/jallen-cse/error)
 
 This repository was born of annoyances when percolating errors up a call stack. Error is specifically useful when there is some 
 human on the calling end that needs a readable message about what went awry.
@@ -72,4 +73,3 @@ I consider this project to be unfinished. Testing, features, and efficiencies ca
 - format string overloads of reason::reason, ::wrap, and ::extend
 - non-header-only build
 - defaultable error (to avoid some wrapper overhead like w/ optional) 
-- version / tag / release

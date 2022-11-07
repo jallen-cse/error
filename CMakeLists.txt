@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11) # fetch content from 3.11
 
 project(jack-error
-    VERSION 0.0.0
+    VERSION 0.1.0
     LANGUAGES CXX
     DESCRIPTION "Basic types for representing erroneous circumstances in modern C++."
     HOMEPAGE_URL https://github.com/jallen-cse/error)
