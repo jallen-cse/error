@@ -31,13 +31,13 @@ Inheritance diagram for jack\+::reason\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Construct a new reason object by copying from a std\+::string. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason_afb289f76d6deb8e1b40fe5053623f11f}{reason}} (std\+::string \&\&str)
 \begin{DoxyCompactList}\small\item\em Construct a new reason object by moving from a std\+::string. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1reason_aa76c8b68463e9b6c90ac69d7dbda3633}{reason}} (str\+\_\+args... str)
+{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1reason_ada09811ee7fff5d229ef16e23835b7e8}{reason}} (str\+\_\+args \&\&... str)
 \begin{DoxyCompactList}\small\item\em Construct a new reason object from an arbitrary series of parameters using a std\+::stringstream and operator\texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_aaedaac528937f963348cecfe3abe780f}{operator=}} (const \mbox{\hyperlink{classjack_1_1reason}{reason}} \&other)=default
 \begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_a9a51569485ac8154ebefc1256a6d3141}{operator=}} (\mbox{\hyperlink{classjack_1_1reason}{reason}} \&\&from)=default
 \begin{DoxyCompactList}\small\item\em Move assignment operator. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}{wrap}} (str\+\_\+args... context)
+{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_a1adf7f669247d1669d1af9e760756618}{wrap}} (str\+\_\+args \&\&... context)
 \begin{DoxyCompactList}\small\item\em Wrap this reason with additional context (prepend). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_a56ed56f387dd2f276e0def25f3959fc2}{wrap}} (const char $\ast$context)
 \begin{DoxyCompactList}\small\item\em Wrap this reason with additional context (prepend). \end{DoxyCompactList}\item 
@@ -45,7 +45,7 @@ Inheritance diagram for jack\+::reason\+:\begin{figure}[H]
 \begin{DoxyCompactList}\small\item\em Wrap this reason with additional context (prepend). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_aaee7f81796651d31e0f06e7081136de9}{wrap}} (const \mbox{\hyperlink{classjack_1_1reason}{reason}} \&context)
 \begin{DoxyCompactList}\small\item\em Wrap this reason with additional context (prepend). \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}{extend}} (str\+\_\+args... info)
+{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_a93dee949e557b67a071cba9d5351e494}{extend}} (str\+\_\+args \&\&... info)
 \begin{DoxyCompactList}\small\item\em Extend this reason with additional information (append). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1reason}{reason}} \& \mbox{\hyperlink{classjack_1_1reason_ae99562ad40dd496d1208f97c04d15668}{extend}} (const char $\ast$info)
 \begin{DoxyCompactList}\small\item\em Extend this reason with additional information (append). \end{DoxyCompactList}\item 
@@ -134,12 +134,12 @@ Construct a new reason object by moving from a std\+::string.
 {\em str} & std\+::string to move from \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classjack_1_1reason_aa76c8b68463e9b6c90ac69d7dbda3633}\label{classjack_1_1reason_aa76c8b68463e9b6c90ac69d7dbda3633}} 
+\mbox{\Hypertarget{classjack_1_1reason_ada09811ee7fff5d229ef16e23835b7e8}\label{classjack_1_1reason_ada09811ee7fff5d229ef16e23835b7e8}} 
 \index{jack::reason@{jack::reason}!reason@{reason}}
 \index{reason@{reason}!jack::reason@{jack::reason}}
 \doxysubsubsection{\texorpdfstring{reason()}{reason()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
 {\footnotesize\ttfamily template$<$typename... str\+\_\+args$>$ \\
-jack\+::reason\+::reason (\begin{DoxyParamCaption}\item[{str\+\_\+args...}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+jack\+::reason\+::reason (\begin{DoxyParamCaption}\item[{str\+\_\+args \&\&...}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
 
 
 
@@ -212,12 +212,12 @@ Extend this reason with additional information (append).
 \begin{DoxyReturn}{Returns}
 reference to this reason 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}\label{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}} 
+\mbox{\Hypertarget{classjack_1_1reason_a93dee949e557b67a071cba9d5351e494}\label{classjack_1_1reason_a93dee949e557b67a071cba9d5351e494}} 
 \index{jack::reason@{jack::reason}!extend@{extend}}
 \index{extend@{extend}!jack::reason@{jack::reason}}
 \doxysubsubsection{\texorpdfstring{extend()}{extend()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
 {\footnotesize\ttfamily template$<$typename... str\+\_\+args$>$ \\
-\mbox{\hyperlink{classjack_1_1reason}{reason}} \& jack\+::reason\+::extend (\begin{DoxyParamCaption}\item[{str\+\_\+args...}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{classjack_1_1reason}{reason}} \& jack\+::reason\+::extend (\begin{DoxyParamCaption}\item[{str\+\_\+args \&\&...}]{info }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -321,12 +321,12 @@ Wrap this reason with additional context (prepend).
 \begin{DoxyReturn}{Returns}
 reference to this reason 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}\label{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}} 
+\mbox{\Hypertarget{classjack_1_1reason_a1adf7f669247d1669d1af9e760756618}\label{classjack_1_1reason_a1adf7f669247d1669d1af9e760756618}} 
 \index{jack::reason@{jack::reason}!wrap@{wrap}}
 \index{wrap@{wrap}!jack::reason@{jack::reason}}
 \doxysubsubsection{\texorpdfstring{wrap()}{wrap()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
 {\footnotesize\ttfamily template$<$typename... str\+\_\+args$>$ \\
-\mbox{\hyperlink{classjack_1_1reason}{reason}} \& jack\+::reason\+::wrap (\begin{DoxyParamCaption}\item[{str\+\_\+args...}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{classjack_1_1reason}{reason}} \& jack\+::reason\+::wrap (\begin{DoxyParamCaption}\item[{str\+\_\+args \&\&...}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 

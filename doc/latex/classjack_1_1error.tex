@@ -29,7 +29,7 @@ A human-\/readable error description with a paired code for programmatic error h
 \begin{DoxyCompactList}\small\item\em Construct a new error object by accepting a code and a std\+::string to copy from. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1error_aed48df195cee09fd04ca65aebd117521}{error}} (int \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}, std\+::string \&\&\mbox{\hyperlink{classjack_1_1reason}{reason}})
 \begin{DoxyCompactList}\small\item\em Construct a new error object by accepting a code and a std\+::string to move from. \end{DoxyCompactList}\item 
-{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1error_aa9325ef055d34bc221cf9b309c12e1af}{error}} (int \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}, str\+\_\+args... \mbox{\hyperlink{classjack_1_1reason}{reason}})
+{\footnotesize template$<$typename... str\+\_\+args$>$ }\\\mbox{\hyperlink{classjack_1_1error_a8a915d6e45ab65eae9cd0c9c9e89b8d2}{error}} (int \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}, str\+\_\+args \&\&... \mbox{\hyperlink{classjack_1_1reason}{reason}})
 \begin{DoxyCompactList}\small\item\em Construct a new error object from an arbitrary series of parameters using a std\+::stringstream and operator\texorpdfstring{$<$}{<}\texorpdfstring{$<$}{<}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classjack_1_1error}{error}} \& \mbox{\hyperlink{classjack_1_1error_a94c9879e84d9856cbc26976a6a049015}{operator=}} (const \mbox{\hyperlink{classjack_1_1error}{error}} \&other)=default
 \begin{DoxyCompactList}\small\item\em Copy assignment operator. \end{DoxyCompactList}\item 
@@ -169,12 +169,12 @@ Construct a new error object by accepting a code and a std\+::string to move fro
 {\em reason} & std\+::string to move from \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classjack_1_1error_aa9325ef055d34bc221cf9b309c12e1af}\label{classjack_1_1error_aa9325ef055d34bc221cf9b309c12e1af}} 
+\mbox{\Hypertarget{classjack_1_1error_a8a915d6e45ab65eae9cd0c9c9e89b8d2}\label{classjack_1_1error_a8a915d6e45ab65eae9cd0c9c9e89b8d2}} 
 \index{jack::error@{jack::error}!error@{error}}
 \index{error@{error}!jack::error@{jack::error}}
 \doxysubsubsection{\texorpdfstring{error()}{error()}\hspace{0.1cm}{\footnotesize\ttfamily [8/8]}}
 {\footnotesize\ttfamily template$<$typename... str\+\_\+args$>$ \\
-jack\+::error\+::error (\begin{DoxyParamCaption}\item[{int}]{code,  }\item[{str\+\_\+args...}]{reason }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+jack\+::error\+::error (\begin{DoxyParamCaption}\item[{int}]{code,  }\item[{str\+\_\+args \&\&...}]{reason }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 

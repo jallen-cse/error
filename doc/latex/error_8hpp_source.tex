@@ -86,7 +86,7 @@
 \DoxyCodeLine{130     \}}
 \DoxyCodeLine{131 }
 \DoxyCodeLine{139     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
-\DoxyCodeLine{140     \mbox{\hyperlink{classjack_1_1reason_aa76c8b68463e9b6c90ac69d7dbda3633}{reason}}(str\_args... str) : std::string(detail::make\_str(}
+\DoxyCodeLine{140     \textcolor{keyword}{explicit} \mbox{\hyperlink{classjack_1_1reason_ada09811ee7fff5d229ef16e23835b7e8}{reason}}(str\_args\&\&... str) : std::string(detail::make\_str(}
 \DoxyCodeLine{141             std::forward<str\_args>(str)...))}
 \DoxyCodeLine{142     \{}
 \DoxyCodeLine{143     \}}
@@ -96,7 +96,7 @@
 \DoxyCodeLine{159     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a9a51569485ac8154ebefc1256a6d3141}{operator=}}(\mbox{\hyperlink{classjack_1_1reason}{reason}}\&\& from) = \textcolor{keywordflow}{default};}
 \DoxyCodeLine{160 }
 \DoxyCodeLine{167     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
-\DoxyCodeLine{168     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}{wrap}}(str\_args... context)}
+\DoxyCodeLine{168     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a1adf7f669247d1669d1af9e760756618}{wrap}}(str\_args\&\&... context)}
 \DoxyCodeLine{169     \{}
 \DoxyCodeLine{170         \textcolor{keyword}{const} \textcolor{keyword}{auto} ctx\_str = detail::make\_str(}
 \DoxyCodeLine{171                 std::forward<str\_args>(context)...);}
@@ -127,7 +127,7 @@
 \DoxyCodeLine{214     \}}
 \DoxyCodeLine{215 }
 \DoxyCodeLine{222     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
-\DoxyCodeLine{223     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}{extend}}(str\_args... info)}
+\DoxyCodeLine{223     \mbox{\hyperlink{classjack_1_1reason}{reason}}\& \mbox{\hyperlink{classjack_1_1reason_a93dee949e557b67a071cba9d5351e494}{extend}}(str\_args\&\&... info)}
 \DoxyCodeLine{224     \{}
 \DoxyCodeLine{225         \textcolor{keyword}{const} \textcolor{keyword}{auto} info\_str = detail::make\_str(}
 \DoxyCodeLine{226                 std::forward<str\_args>(info)...);}
@@ -199,8 +199,8 @@
 \DoxyCodeLine{371     \}}
 \DoxyCodeLine{372     }
 \DoxyCodeLine{381     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
-\DoxyCodeLine{382     \mbox{\hyperlink{classjack_1_1error_aa9325ef055d34bc221cf9b309c12e1af}{error}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}, str\_args... \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
-\DoxyCodeLine{383             \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}(\mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}), \mbox{\hyperlink{classjack_1_1error_a996ae6bf29812ed873b050a288bd224e}{desc}}(\mbox{\hyperlink{classjack_1_1reason}{reason}}...)}
+\DoxyCodeLine{382     \mbox{\hyperlink{classjack_1_1error_a8a915d6e45ab65eae9cd0c9c9e89b8d2}{error}}(\textcolor{keywordtype}{int} \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}, str\_args\&\&... \mbox{\hyperlink{classjack_1_1reason}{reason}}) :}
+\DoxyCodeLine{383             \mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}(\mbox{\hyperlink{classjack_1_1error_acd9069ced595897598a60d4a48315d0b}{code}}), \mbox{\hyperlink{classjack_1_1error_a996ae6bf29812ed873b050a288bd224e}{desc}}(std::forward<str\_args>(\mbox{\hyperlink{classjack_1_1reason}{reason}})...)}
 \DoxyCodeLine{384     \{}
 \DoxyCodeLine{385     \}}
 \DoxyCodeLine{386     }
@@ -211,14 +211,14 @@
 \DoxyCodeLine{408     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
 \DoxyCodeLine{409     \mbox{\hyperlink{classjack_1_1error}{error}}\& \mbox{\hyperlink{classjack_1_1error_a350fc07d85f096fd76a2a45c52683cae}{wrap}}(str\_args\&\&... context)}
 \DoxyCodeLine{410     \{}
-\DoxyCodeLine{411         \mbox{\hyperlink{classjack_1_1error_a996ae6bf29812ed873b050a288bd224e}{desc}}.\mbox{\hyperlink{classjack_1_1reason_ac84a261c4231bc9a823c8b1ff315b559}{wrap}}(std::forward<str\_args>(context)...);}
+\DoxyCodeLine{411         \mbox{\hyperlink{classjack_1_1error_a996ae6bf29812ed873b050a288bd224e}{desc}}.\mbox{\hyperlink{classjack_1_1reason_a1adf7f669247d1669d1af9e760756618}{wrap}}(std::forward<str\_args>(context)...);}
 \DoxyCodeLine{412         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
 \DoxyCodeLine{413     \}}
 \DoxyCodeLine{414 }
 \DoxyCodeLine{420     \textcolor{keyword}{template} <\textcolor{keyword}{typename}... str\_args>}
 \DoxyCodeLine{421     \mbox{\hyperlink{classjack_1_1error}{error}}\& \mbox{\hyperlink{classjack_1_1error_a389e773854ebd1892292864552e085c4}{extend}}(str\_args\&\&... info)}
 \DoxyCodeLine{422     \{}
-\DoxyCodeLine{423         \mbox{\hyperlink{classjack_1_1error_a996ae6bf29812ed873b050a288bd224e}{desc}}.\mbox{\hyperlink{classjack_1_1reason_a57ba62166ca453bd02f80efa38d62c44}{extend}}(std::forward<str\_args>(info)...);}
+\DoxyCodeLine{423         \mbox{\hyperlink{classjack_1_1error_a996ae6bf29812ed873b050a288bd224e}{desc}}.\mbox{\hyperlink{classjack_1_1reason_a93dee949e557b67a071cba9d5351e494}{extend}}(std::forward<str\_args>(info)...);}
 \DoxyCodeLine{424         \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
 \DoxyCodeLine{425     \}}
 \DoxyCodeLine{426 }
