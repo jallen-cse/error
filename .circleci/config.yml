@@ -13,9 +13,9 @@ jobs:
           name: make a build dir
       - run: 
           command: |
-            cmake .. -DJACK_ERROR_BUILD_TESTS=off -DJACK_ERROR_BUILD_EXAMPLE=on &&
+            cmake .. -DJACK_ERROR_BUILD_TESTS=off -DJACK_ERROR_BUILD_EXAMPLES=on &&
             cmake --build .
-          name: build example
+          name: build examples
           working_directory: ./build
   
   test:
@@ -29,7 +29,7 @@ jobs:
           name: make a build dir
       - run: 
           command: | 
-            cmake .. -DJACK_ERROR_BUILD_TESTS=on -DJACK_ERROR_BUILD_EXAMPLE=off &&
+            cmake .. -DJACK_ERROR_BUILD_TESTS=on -DJACK_ERROR_BUILD_EXAMPLES=off &&
             cmake --build . -j$(nproc)
           name: build test executables
           working_directory: ./build

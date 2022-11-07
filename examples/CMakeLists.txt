@@ -1,2 +1,2 @@
-add_executable(example ex0.cpp)
-target_link_libraries(example PRIVATE error)
+add_executable(jack_example_0 ex0.cpp)
+target_link_libraries(jack_example_0 PRIVATE error)
