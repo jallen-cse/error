@@ -165,7 +165,7 @@ class reason : private std::string
      * @return reference to this reason
      */
     template <typename... str_args>
-    reason& wrap(str_args... context)
+    reason& wrap(str_args&&... context)
     {
         const auto ctx_str = detail::make_str(
                 std::forward<str_args>(context)...);
@@ -220,7 +220,7 @@ class reason : private std::string
      * @return reference to this reason
      */
     template <typename... str_args>
-    reason& extend(str_args... info)
+    reason& extend(str_args&&... info)
     {
         const auto info_str = detail::make_str(
                 std::forward<str_args>(info)...);
@@ -379,8 +379,8 @@ class error
      * @param reason values to construct a reason from
      */
     template <typename... str_args>
-    error(int code, str_args... reason) :
-            code(code), desc(reason...)
+    error(int code, str_args&&... reason) :
+            code(code), desc(std::forward<str_args>(reason)...)
     {
     }
     
