@@ -137,7 +137,7 @@ class reason : private std::string
      * @param str values to construct a reason from
      */
     template <typename... str_args>
-    reason(str_args... str) : std::string(detail::make_str(
+    explicit reason(str_args&&... str) : std::string(detail::make_str(
             std::forward<str_args>(str)...))
     {
     }
